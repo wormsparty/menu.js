@@ -43,6 +43,11 @@ function send_pinocchio_menu(channel) {
 
             if (url.startsWith('/view/data/3070/') && url.indexOf('semaine') > -1) {
                 url.replace(/%20(\d+).pdf$/, function(match, wn) {
+                    // This is to make sure that when we switch to a new year, it prefers "semaine 1" to "semaine 52" if both exist
+                    if (wn < 10) {
+                        wn += 52;
+                    }
+
                     if (wn > highestWeekNo) {
                         highestWeekNo = wn;
                         currentUrl = $(link).attr('href')
