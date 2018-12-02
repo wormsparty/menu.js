@@ -9,6 +9,10 @@ const schedule = require('node-schedule');
 const client = new discord.Client();
 const config = require("./config.json");
 
+function send_boccalino_menu(channel) {
+    channel.send('Menu pizza du Boccalino: https://wormsparty.github.io/boccali-carte');
+}
+
 function send_sanmarco_menu(channel) {
     const sanmarco_options = {
         screenSize: {
@@ -63,6 +67,7 @@ function send_pinocchio_menu(channel) {
 function send_menu() {
     let channel = client.channels.get(config.channel);
 
+    send_boccalino_menu(channel);
     send_sanmarco_menu(channel);
     send_pinocchio_menu(channel);
 }
