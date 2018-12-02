@@ -1,0 +1,11 @@
+{
+  "name": "menu-bot",
+  "version": "0.0.1",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "discord.js": "latest",
+    "node-schedule": "^1.3.1",
+    "request": "latest",
+    "webshot": "^0.18.0"
+  }
+}
