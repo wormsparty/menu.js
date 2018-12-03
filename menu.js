@@ -35,6 +35,28 @@ function send_sanmarco_menu(channel) {
     });
 }
 
+function send_hep_menu(channel) {
+    const hep_options = {
+        screenSize: {
+            width: 984,
+            height: 1080
+        }, shotSize: {
+            width: 517,
+            height: 249
+        }, shotOffset: {
+            left: 232.5,
+            top: 709,
+        },
+        userAgent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g',
+    };
+
+    webshot('hepl.ch/cms/accueil/acces-rapide/pratique/restaurant.html', 'hepo.jpeg', hep_options, function() {
+        channel.send('Menu de la HEP:', {
+            file: './hep.jpeg'
+        });
+    });
+}
+
 function send_pinocchio_menu(channel) {
     request('http://www.le-pinocchio.ch', function(err, resp, body) {
         const $ = cheerio.load(body);
@@ -68,6 +90,7 @@ function send_menu() {
     let channel = client.channels.get(config.channel);
 
     send_boccalino_menu(channel);
+    send_hep_menu(channel);
     send_sanmarco_menu(channel);
     send_pinocchio_menu(channel);
 }
@@ -97,7 +120,8 @@ client.on("ready", () => {
     schedule.scheduleJob('0 0 11 * * 1-5', function () {
         send_menu();
     });
+
+    console.log('Ready!');
 });
 
 client.login(config.token);
-
