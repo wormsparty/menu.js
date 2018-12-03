@@ -38,19 +38,19 @@ function send_sanmarco_menu(channel) {
 function send_hep_menu(channel) {
     const hep_options = {
         screenSize: {
-            width: 984,
+            width: 991,
             height: 1080
         }, shotSize: {
-            width: 517,
-            height: 249
+            width: 515,
+            height: 247
         }, shotOffset: {
-            left: 232.5,
-            top: 709,
+            left: 236,
+            top: 715,
         },
         userAgent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g',
     };
 
-    webshot('hepl.ch/cms/accueil/acces-rapide/pratique/restaurant.html', 'hepo.jpeg', hep_options, function() {
+    webshot('hepl.ch/cms/accueil/acces-rapide/pratique/restaurant.html', 'hep.jpeg', hep_options, function() {
         channel.send('Menu de la HEP:', {
             file: './hep.jpeg'
         });
