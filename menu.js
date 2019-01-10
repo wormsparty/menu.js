@@ -28,7 +28,7 @@ function send_sanmarco_menu(channel) {
         userAgent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g',
     };
 
-    webshot('piazza-san-marco.ch', 'san-marco.jpeg', sanmarco_options, function() {
+    webshot('piazza-san-marco.ch', './san-marco.jpeg', sanmarco_options, function() {
         channel.send('Menu du San Marco:', {
             file: './san-marco.jpeg'
         });
@@ -50,7 +50,7 @@ function send_hep_menu(channel) {
         userAgent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g',
     };
 
-    webshot('hepl.ch/cms/accueil/acces-rapide/pratique/restaurant.html', 'hep.jpeg', hep_options, function() {
+    webshot('hepl.ch/cms/accueil/acces-rapide/pratique/restaurant.html', './hep.jpeg', hep_options, function() {
         channel.send('Menu de la HEP:', {
             file: './hep.jpeg'
         });
@@ -68,14 +68,16 @@ function send_pinocchio_menu(channel) {
             const url = $(link).attr('href').toLowerCase();
 
             if (url.startsWith('/view/data/3070/') && url.indexOf('semaine') > -1) {
-                url.replace(/%20(\d+).pdf$/, function(match, wn) {
+                url.replace(/%20+(\d+).pdf$/, function(match, wn) {
+                    let weekNo = parseInt(wn, 10);
+
                     // This is to make sure that when we switch to a new year, it prefers "semaine 1" to "semaine 52" if both exist
-                    if (wn < 10) {
-                        wn += 52;
+                    if (weekNo < 10) {
+                        weekNo += 52;
                     }
 
-                    if (wn > highestWeekNo) {
-                        highestWeekNo = wn;
+                    if (weekNo > highestWeekNo) {
+                        highestWeekNo = weekNo;
                         currentUrl = $(link).attr('href')
                     }
                 });
@@ -89,6 +91,7 @@ function send_pinocchio_menu(channel) {
 function send_menu() {
     let channel = client.channels.get(config.channel);
 
+    //channel.send("On m'appelle?");
     send_boccalino_menu(channel);
     send_hep_menu(channel);
     send_sanmarco_menu(channel);
